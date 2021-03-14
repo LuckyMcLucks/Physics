@@ -1,0 +1,36 @@
+
+Word:cm,Catagory:unit,Step up:100,Measures:length,Up:m
+
+Word:cm^2,Catagory:unit,Step up:10000,Measures:area,Up:m^2
+
+Word:m,Catagory:unit,Step up:1000,Step down:100,Measures:length,Up:km,Down:cm
+
+Word:m^2,Catagory:unit,Step up:1000000,Step down:10000,Measures:area,Up:km^2,Down:cm^2
+
+Word:Pa,Catagory:unit,Step up:1000,Measures:pressure,Up:kPa
+
+Word:Km,Catagory:unit,Step down:1000,Measures:length,Down:m
+
+Word:W,Catagory:unit,Step up:1000,Measures:power,Up:kWatt
+
+Word:g,Catagory:unit,Step up:1000,Measures:mass,Up:kg
+
+Word:N,Catagory:unit,Measures:force
+
+Word:m/s,Catagory:unit,Measures:velocity
+
+Word:m/s^2,Catagory:unit,Measures:acceleration
+
+Word:C,Catagory:unit,Measures:temperature
+
+Word:K,Catagory:unit,Measures:temperature
+
+Word:min,Catagory:unit,Measures:time,Up:hr,Down:s,Step down:60,Step up:60
+
+Word:hr,Catagory:unit,Measures:time,Down:min,Step down:60
+
+Word:s,Catagory:unit,Measures:time,Up:min,Step up:60
+
+Word:J,Catagory:unit,Measures:energy
+
+Word:degree,Catagory:unit,Measures:angle

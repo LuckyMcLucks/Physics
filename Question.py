@@ -1,4 +1,4 @@
-import Natural_language_Process
+import Dictionary
 import numpy as np
 class  DNA:
     def __init__(self,data,Value):
@@ -22,33 +22,12 @@ class  DNA:
         print(self.data['Units'])
         print(self.data['Measures'])
         print(self.data['Step up'])
-class Physic_Dic(Natural_language_Process.Dictionary):
+class Physic_Dic(Dictionary.Dictionary):
 
     def __int__(self):
         super().__init__()
-    def read(self,text):
-        sentence = text.spilt(' ')
-        for index,word in enumerate(sentence):
-            try:
-                self.collection.find_one({'Word':word},{'_id':0})
-
     
-    def Add_word(self,Word,catagory,step_up=None,step_down = None,measures = None,up =None,down=None):
-        if catagory == 'unit':
-            self.collection.insert_one({'Word':Word,'Measures':measures,'Catagory':catagory,'Step up':step_up,'Step down':step_down,'Up':up,'Down':down})# catagory = unit,other Measures= lenght ,pressue 
-        else:
-            self.collection.insert_one({'Word':Word,'Catagory':catagory})
-    def create_obj(self,data):
-        
-        value , unit = data.split(' ')
-
-        if self.Dictionary.Exist(unit):
-            doc = self.Dictionary.collection.find_one({'Word':unit},{'_id':0})
-
-            d = DNA(doc,value)
-        else:
-            print('obj error')
-        return d     
+                
     def delete_collection(self):
         self.collection.drop()
     def restart(self):
@@ -72,6 +51,22 @@ class Classic_mechanics:
         self.gravity = -9.80665
         self.Variables = {}
         self.Dictionary = Physic_Dic('Dictionary','Physics')
+    def read(self,text):
+        sentence = text.split(' ')
+        flag = False
+        for index,word in enumerate(sentence):
+            
+            
+            temp = self.Dictionary.collection.find_one({'Word':word},{'Catagory':1,'Query':1})
+            if temp ==None:
+                pass
+            elif temp['Catagory'] == 'term' and flag ==True:
+                
+                print(self.query(temp['Query']))
+            elif temp['Catagory'] == 'unit':
+                self.add_data(sentence[index - 1] + ' ' + word)
+            elif temp['Catagory'] == 'query':
+                flag =True 
     def display(self):
         for i in self.Variables:
             print(i,':',self.Variables[i].get_value(),self.Variables[i].get_units()) 
@@ -98,7 +93,7 @@ class Classic_mechanics:
             self.Variables[key] = obj
         
 
-    def qurey(self,key):
+    def query(self,key):
         func = getattr(self,'get_'+key)
         return func()
     def check(self,func):
@@ -222,7 +217,7 @@ class Classic_mechanics:
         try:
             return str(time.get_value()*x_velocity.get_value()) +' m'
         except:
-            print('tragic error')
+            print('trajectory  error')
     def get_xy_velocity(self):
         if 'velocity' not in self.Variables:
             self.add_data(self.get_velocity())
@@ -246,11 +241,11 @@ class Classic_mechanics:
         distance= self.Variables['length']
         velocity = self.Variables['velocity']
         temp = (-self.gravity)*distance.get_value()/velocity.get_value()**2
-        print(temp)
+        
         try:
             return str(0.5*(np.arcsin(temp)*180/np.pi)) + ' degree'
         except:
-            print('not possible')
+            print('angle error')
     def get_trajectory_velocity(self):
         if 'time' not in self.Variables:
             self.add_data(self.get_trajectory_time())
@@ -279,16 +274,10 @@ class Classic_mechanics:
         try:
             return str(y_velocity.get_value()*(time.get_value()/2) + 0.5*self.gravity*(time.get_value()/2)**2) +' m'
         except:
-            print('tra h error')
-def Read(text,dictionary):
-    sentence = text.split(' ')
-    for i in sentence:
-        recognise
+            print('trajectory height error')
+
 if __name__ == '__main__':  
     Sim = Classic_mechanics()
-    Sim.add_data('20 m/s')
-    Sim.add_data('25 degree')
-    
-    print('ans:' + Sim.qurey('trajectory_height'))
-
-    Sim.display()
+    Sim.Dictionary.restart()
+    #Sim.read('An object is launched at a velocity of 20 m/s in a direction making an angle of 25 degree upward with the horizontal. What is the maximum height reached by the object?')
+    Sim.read('A ball kicked from ground level at an initial velocity of 60 m/s and an angle θ with ground reaches a horizontal distance of 200 m . What is the size of angle θ?')

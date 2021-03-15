@@ -34,3 +34,9 @@ Word:s,Catagory:unit,Measures:time,Up:min,Step up:60
 Word:J,Catagory:unit,Measures:energy
 
 Word:degree,Catagory:unit,Measures:angle
+
+Word:What,Catagory:query
+
+Word:height,Catagory:term,Query:trajectory_height
+
+Word:angle,Catagory:term,Query:trajectory_angle
